@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         final EditText titleEdit = findViewById(R.id.name);
         final EditText priceEdit = findViewById(R.id.price);
         final ImageButton addButton = findViewById(R.id.add);
