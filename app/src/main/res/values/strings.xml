@@ -3,4 +3,5 @@
     <string name="title_string">Название</string>
     <string name="price_string">0 \u20BD</string>
     <string name="plus_string">Плюс</string>
+    <string name="rub_char">₽</string>
 </resources>
