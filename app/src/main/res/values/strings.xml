@@ -4,4 +4,17 @@
     <string name="price_string">0 \u20BD</string>
     <string name="plus_string">Плюс</string>
     <string name="rub_char">₽</string>
+
+    <string name="tab_expenses">Расходы</string>
+    <string name="tab_incomes">Доходы</string>
+    <string name="tab_balance">Баланс</string>
+    <string name="balance_text_temp">В разработке</string>
+
+    <string-array name="tab_titles">
+        <item>@string/tab_expenses</item>
+        <item>@string/tab_incomes</item>
+        <item>@string/tab_balance</item>
+
+
+    </string-array>
 </resources>
