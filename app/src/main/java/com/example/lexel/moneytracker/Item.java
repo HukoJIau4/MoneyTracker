@@ -1,29 +1,21 @@
 package com.example.lexel.moneytracker;
 
 public class Item {
+    public static final String TYPE_UNKNOWN = "unknown";
+    public static final String TYPE_EXPENSE = "expense";
+    public static final String TYPE_INCOME = "income";
 
-    private String name;
-    private String price;
+    public int id;
+    public int price;
+    public String name;
+    public String type;
 
-    Item(String name, String price) {
+    public Item(String name, int price, String type) {
         this.name = name;
         this.price = price;
+        this.type = type;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    String getPrice() {
-        return String.valueOf(price);
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
 }
