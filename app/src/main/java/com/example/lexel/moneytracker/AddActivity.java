@@ -1,26 +1,58 @@
 package com.example.lexel.moneytracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+
 public class AddActivity extends AppCompatActivity {
+
+    public static final String EXTRA_TYPE = "type";
+    public static final String RESULT_ITEM = "item";
+    public static final int RC_ADD_ITEM = 99;
+
+    private EditText name;
+    private EditText price;
+    private ImageButton add;
+
+    private String type;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        final EditText titleEdit = findViewById(R.id.name);
-        final EditText priceEdit = findViewById(R.id.price);
-        final ImageButton addButton = findViewById(R.id.add);
-        addButton.setEnabled(false);
+        name = findViewById(R.id.name);
+        price = findViewById(R.id.price);
+        add = findViewById(R.id.add);
+        add.setEnabled(false);
 
-        titleEdit.addTextChangedListener(new TextWatcher() {
+        type = getIntent().getStringExtra(EXTRA_TYPE);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                Intent intent = result.putExtra(RESULT_ITEM, new Item(name.getText().toString(), Integer.parseInt(price.getText().toString()), type));
+                setResult(RESULT_OK, result);
+                finish();
+            }
+        });
+
+        name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -28,7 +60,7 @@ public class AddActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                addButton.setEnabled(!TextUtils.isEmpty(s));
+                add.setEnabled(!TextUtils.isEmpty(s));
 
             }
 
@@ -38,7 +70,7 @@ public class AddActivity extends AppCompatActivity {
 
             }
         });
-        priceEdit.addTextChangedListener(new TextWatcher() {
+        price.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -46,7 +78,7 @@ public class AddActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                addButton.setEnabled(!TextUtils.isEmpty(s));
+                add.setEnabled(!TextUtils.isEmpty(s));
 
             }
 

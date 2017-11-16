@@ -1,16 +1,18 @@
 package com.example.lexel.moneytracker;
 
-public class Item {
-    public static final String TYPE_UNKNOWN = "unknown";
-    public static final String TYPE_EXPENSE = "expense";
-    public static final String TYPE_INCOME = "income";
+import java.io.Serializable;
+
+public class Item implements Serializable{
+    static final String TYPE_UNKNOWN = "unknown";
+    static final String TYPE_EXPENSE = "expense";
+    static final String TYPE_INCOME = "income";
 
     public int id;
-    public int price;
+    int price;
     public String name;
-    public String type;
+    private String type;
 
-    public Item(String name, int price, String type) {
+    Item(String name, int price, String type) {
         this.name = name;
         this.price = price;
         this.type = type;

@@ -9,6 +9,7 @@
     <string name="tab_incomes">Доходы</string>
     <string name="tab_balance">Баланс</string>
     <string name="balance_text_temp">В разработке</string>
+    <string name="add_scr_tittle">Новая запись</string>
 
     <string-array name="tab_titles">
         <item>@string/tab_expenses</item>
