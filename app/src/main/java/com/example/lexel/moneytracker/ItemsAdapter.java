@@ -6,35 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
-    private List<Item> items = new ArrayList<>();
+    private List<Item> items = Collections.emptyList();
 
-    ItemsAdapter() {
+    void setItems(List<Item> items){
 
-        items.add(new Item("Молоко", 35 + " \u20BD"));
-        items.add(new Item("Желе", 78 + " \u20BD"));
-        items.add(new Item("Сковородка с антипригарным покрытием", 2500 + " \u20BD"));
-        items.add(new Item("Молоко", 35 + " \u20BD"));
-        items.add(new Item("Желе", 78 + " \u20BD"));
-        items.add(new Item("Сковородка с антипригарным покрытием", 2500 + " \u20BD"));
-        items.add(new Item("Молоко", 35 + " \u20BD"));
-        items.add(new Item("Желе", 78 + " \u20BD"));
-        items.add(new Item("Сковородка с антипригарным покрытием", 2500 + " \u20BD"));
-        items.add(new Item("Молоко", 35 + " \u20BD"));
-        items.add(new Item("Желе", 78 + " \u20BD"));
-        items.add(new Item("Сковородка с антипригарным покрытием", 2500 + " \u20BD"));
-        items.add(new Item("Молоко", 35 + " \u20BD"));
-        items.add(new Item("Желе", 78 + " \u20BD"));
-        items.add(new Item("Сковородка с антипригарным покрытием", 2500 + " \u20BD"));
-        items.add(new Item("Молоко", 35 + " \u20BD"));
-        items.add(new Item("Желе", 78 + " \u20BD"));
-        items.add(new Item("Сковородка с антипригарным покрытием", 2500 + " \u20BD"));
-
+        this.items = items;
+        notifyDataSetChanged();
     }
 
 
@@ -78,8 +61,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
             void bind(Item item){
 
-                price.setText(String.valueOf(item.getPrice()));
-                name.setText(item.getName());
+                name.setText(item.name);
+                price.setText(String.valueOf(item.price));
+
             }
 
 
