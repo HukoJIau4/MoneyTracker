@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="text_color_white">#ffffff</color>
     <color name="background_color">#84c0c5</color>
-    <color name="item_name_bg">#63DB93</color>
-    <color name="item_price_bg">#04819E</color>
+    <color name="item_name_bg">#5bb1f2</color>
+    <color name="item_price_bg">#04379e</color>
     <color name="tab_indicator_color">#f5df32</color>
 </resources>

@@ -1,8 +1,10 @@
 package com.example.lexel.moneytracker;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -19,6 +21,7 @@ import com.example.lexel.moneytracker.api.Api;
 import java.io.IOException;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.lexel.moneytracker.Item.TYPE_UNKNOWN;
 
 public class ItemsFragment extends Fragment {
@@ -70,7 +73,15 @@ public class ItemsFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
-
+        FloatingActionButton fab = view.findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddActivity.class);
+                intent.putExtra(AddActivity.EXTRA_TYPE, type);
+                startActivityForResult(intent, AddActivity.RC_ADD_ITEM);
+            }
+        });
         loadItems();
 
         }
@@ -97,7 +108,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
                 if (items == null) {
-                    showError("Произошла ошибка");
+                    showError();
 
                 } else {
                     adapter.setItems(items);
@@ -111,12 +122,22 @@ public class ItemsFragment extends Fragment {
             }
         }).forceLoad();
     }
-    private void showError(String error){
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    private void showError(){
+        Toast.makeText(getContext(), "Произошла ошибка", Toast.LENGTH_SHORT).show();
 
     }
 
-//    private void loadItems(){
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK){
+
+            Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
+            Toast.makeText(getContext(), item.name +" " + item.price, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //    private void loadItems(){
 //
 //        new AsyncTask<Void, Void, List<Item>>(){
 //
