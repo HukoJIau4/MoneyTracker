@@ -1,6 +1,7 @@
 package com.example.lexel.moneytracker;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,9 +10,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,16 +33,21 @@ import static com.example.lexel.moneytracker.Item.TYPE_UNKNOWN;
 
 public class ItemsFragment extends Fragment {
 
+    private static final String TAG = "ItemsFragment";
     private static final int LOADER_ITEMS = 0;
 
 
 
     private static final String KEY_TYPE = "TYPE";
+    public static ItemsAdapter adapter;
+    public static ActionMode actionMode;
 
     private String type = TYPE_UNKNOWN;
 
-    private ItemsAdapter adapter;
     private Api api;
+
+
+    private DialogInterface.OnClickListener OnClickListener;
 
     public static ItemsFragment createItemsFragment(String type){
         ItemsFragment fragment = new ItemsFragment();
@@ -73,13 +85,40 @@ public class ItemsFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+
+        adapter.setListener(new ItemsAdapterListener() {
+            @Override
+            public void onItemClick(Item item, int position) {
+                if(isInActionMode()){
+                    toggleSelection(position);
+
+                }
+            }
+
+            @Override
+            public void onItemLongClick(Item item, int position) {
+                if(isInActionMode()){
+                    return;
+                }
+                actionMode = ((AppCompatActivity)getActivity()).startSupportActionMode(actionModeCallback);
+                toggleSelection(position);
+            }
+
+            private void toggleSelection (int position){
+                adapter.toggleSelection(position);
+
+            }
+
+            private boolean isInActionMode(){
+                return actionMode != null;
+            }
+        });
+
         FloatingActionButton fab = view.findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddActivity.class);
-                intent.putExtra(AddActivity.EXTRA_TYPE, type);
-                startActivityForResult(intent, AddActivity.RC_ADD_ITEM);
+                AddActivity.startForResult(ItemsFragment.this, type, AddActivity.RC_ADD_ITEM);
             }
         });
         loadItems();
@@ -137,84 +176,64 @@ public class ItemsFragment extends Fragment {
         }
     }
 
-    //    private void loadItems(){
-//
-//        new AsyncTask<Void, Void, List<Item>>(){
-//
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//            }
-//
-//            @Override
-//            protected List<Item> doInBackground(Void... voids) {
-//                try {
-//                    List<Item> items = api.items(type).execute().body();
-//                    return items;
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    return null;
-//                }
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<Item> items) {
-//                super.onPostExecute(items);
-//                adapter.setItems(items);
-//            }
-//        }.execute();
-//
-//
-//    }
+    static void  removeSelectedItems() {
+        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+            adapter.remove(adapter.getSelectedItems().get(i));
+        }
+    }
 
-//    private void loadItems() {
-//        new LoadItemsTask(new Handler(Looper.getMainLooper()){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                switch (msg.what){
-//                    case ITEMS_LOADED:
-//                        adapter.setItems((List<Item>) msg.obj);
-//
-//                        break;
-//                    case ITEMS_ERROR:
-//                        showError((String) msg.obj);
-//
-//                        break;
-//                }
-//            }
-//        }).start();
-//    }
-//
-//    private static final int ITEMS_LOADED = 0;
-//    private static final int ITEMS_ERROR = 1;
-//
-//    private class LoadItemsTask implements Runnable {
-//
-//        private Thread thread;
-//        private Handler handler;
-//
-//        public LoadItemsTask (Handler handler) {
-//            thread = new Thread(this);
-//            this.handler = handler;
-//        }
-//
-//        public void start (){
-//            thread.start();
-//        }
-//
-//
-//        @Override
-//        public void run() {
-//            try {
-//                List<Item> items = api.items(type).execute().body();
-//                handler.obtainMessage(ITEMS_LOADED, items).sendToTarget();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                handler.obtainMessage(ITEMS_ERROR, e.getMessage()).sendToTarget();
-//            }
-//
-//        }
-//    }
+    static void  clearSelectedItems(){
+
+            adapter.clearSelections();
+        }
 
 
-}
+    private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.items_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_remove:
+                        showDialog();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+                adapter.clearSelections();
+                actionMode = null;
+
+            }
+        };
+
+        private void showDialog(){
+
+            DialogFragment dialog;
+            dialog = new ConfirmationDialog();
+            dialog.show(getFragmentManager(), "Confirmation");
+
+
+
+
+        }
+    }
+
+
+
+

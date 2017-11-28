@@ -2,10 +2,22 @@
 <resources>
     <color name="colorPrimary">#9eccbe</color>
     <color name="colorPrimaryDark">#83b49e</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#40ffb3</color>
+
     <color name="text_color_white">#ffffff</color>
+
     <color name="background_color">#84c0c5</color>
+
     <color name="item_name_bg">#5bb1f2</color>
     <color name="item_price_bg">#04379e</color>
+
     <color name="tab_indicator_color">#f5df32</color>
+    <color name="tab_text_color_active">#FFFFFF</color>
+    <color name="tab_text_color_default">#ddede8</color>
+
+    <color name="item_shadow">#30303030</color>
+    <color name="item_color">#5bb1f2</color>
+    <color name="item_color_selected">#04379e</color>
+
+
 </resources>

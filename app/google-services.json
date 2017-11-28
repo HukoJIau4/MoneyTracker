@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "973918230410",
+    "project_id": "moneytrackeral"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973918230410:android:736c464abb00da04",
+        "android_client_info": {
+          "package_name": "com.example.lexel.moneytracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973918230410-73r7pec5dpuf639jv9j1akiskqpcj1dc.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "973918230410-bb36615htbbisc3q2cp61lijcnkdjcs9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lexel.moneytracker",
+            "certificate_hash": "8a2c0476b35d2a8b02021a40563e649bff37218a"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARhdKvmgrSnkwZmhl49GJCdhTj0rGzWz8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

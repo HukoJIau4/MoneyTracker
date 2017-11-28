@@ -2,6 +2,7 @@ package com.example.lexel.moneytracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -21,8 +22,14 @@ public class AddActivity extends AppCompatActivity {
     private EditText name;
     private EditText price;
     private ImageButton add;
-
     private String type;
+
+
+    public static void startForResult(Fragment fragment, String type, int requestCode) {
+               Intent starter = new Intent(fragment.getContext(), AddActivity.class);
+               starter.putExtra(EXTRA_TYPE, type);
+              fragment.startActivityForResult(starter, requestCode);
+    }
 
 
 
@@ -34,62 +41,26 @@ public class AddActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
         add = findViewById(R.id.add);
         add.setEnabled(false);
-
         type = getIntent().getStringExtra(EXTRA_TYPE);
+
+        name.addTextChangedListener(textWatcher);
+        price.addTextChangedListener(textWatcher);
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent result = new Intent();
-                Intent intent = result.putExtra(RESULT_ITEM, new Item(name.getText().toString(), Integer.parseInt(price.getText().toString()), type));
+                result.putExtra(RESULT_ITEM, new Item(name.getText().toString(), Integer.parseInt(price.getText().toString()), type));
                 setResult(RESULT_OK, result);
                 finish();
             }
         });
-
-        name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                add.setEnabled(!TextUtils.isEmpty(s));
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });
-        price.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                add.setEnabled(!TextUtils.isEmpty(s));
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-
 
     }
 
@@ -115,6 +86,29 @@ public class AddActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        name.removeTextChangedListener(textWatcher);
+        price.removeTextChangedListener(textWatcher);
         super.onDestroy();
     }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequences, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequences, int i, int i1, int i2) {
+
+            add.setEnabled(!TextUtils.isEmpty(name.getText()) && !TextUtils.isEmpty(price.getText()));
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 }
+
+
