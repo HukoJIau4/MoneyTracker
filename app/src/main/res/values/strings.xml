@@ -1,15 +1,20 @@
 <resources>
     <string name="app_name">MoneyTracker</string>
-    <string name="title_string">Название</string>
-    <string name="price_string">0 \u20BD</string>
+    <string name="name_hint">Название</string>
+    <string name="price_hint">0 \u20BD</string>
     <string name="plus_string">Плюс</string>
-    <string name="rub_char">₽</string>
+    <string name="rub_char">Р</string>
 
     <string name="tab_expenses">Расходы</string>
     <string name="tab_incomes">Доходы</string>
     <string name="tab_balance">Баланс</string>
     <string name="balance_text_temp">В разработке</string>
     <string name="add_scr_tittle">Новая запись</string>
+    <string name="delete">Удалить</string>
+    <string name="confirm_remove">Уверены, что хотите удалить?</string>
+    <string name="ok">Да</string>
+    <string name="slogan">Ваш незаменимый помощник в управлении бюджетом</string>
+    <string name="login_btn_text">Войти</string>
 
     <string-array name="tab_titles">
         <item>@string/tab_expenses</item>

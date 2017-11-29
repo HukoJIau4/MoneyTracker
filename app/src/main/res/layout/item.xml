@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ItemLayout"
     android:orientation="horizontal"
+    android:background="@drawable/item_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="65dp"
@@ -11,20 +13,21 @@
         style="@style/ItemText"
         android:id="@+id/item_name"
         android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:text="Молоко"
-        android:textSize="20sp"
-        android:background="@color/item_name_bg"
-        android:layout_width="match_parent"/>
+        android:textSize="20sp"/>
 
 
     <TextView
         style="@style/ItemText"
         android:id="@+id/item_price"
         android:layout_weight="0"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         tools:text="35 \u20BD"
         android:textSize="24sp"
-        android:background="@color/item_price_bg"
-        android:layout_width="wrap_content"/>
+        android:background="@color/item_shadow"/>
 
 
 
