@@ -26,7 +26,7 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.NONE;
 
 public class App extends Application{
 
-    private Api api;
+    Api api;
 
     @Override
     public void onCreate() {
@@ -67,6 +67,8 @@ public class App extends Application{
     public boolean isLoggedIn(){
         return !TextUtils.isEmpty(getAuthToken());
     }
+
+
 
     private class AuthInterceptor implements Interceptor{
         @Override

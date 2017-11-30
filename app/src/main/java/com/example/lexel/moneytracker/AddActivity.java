@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.lexel.moneytracker.api.Item;
+
 
 public class AddActivity extends AppCompatActivity {
 

@@ -19,5 +19,10 @@
     <color name="item_color">#5bb1f2</color>
     <color name="item_color_selected">#04379e</color>
 
+    <color name="balance_total">#3ab7ae</color>
+    <color name="balance_expenses">#f76c41</color>
+    <color name="balance_incomes">#fcc31e</color>
+    <color name="balance_text">#95989a</color>
+
 
 </resources>
