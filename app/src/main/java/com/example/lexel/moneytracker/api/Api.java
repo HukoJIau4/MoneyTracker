@@ -1,12 +1,10 @@
 package com.example.lexel.moneytracker.api;
 
-import com.example.lexel.moneytracker.AuthResult;
-import com.example.lexel.moneytracker.Item;
-
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 
@@ -20,4 +18,15 @@ public interface Api {
 
     @GET("auth")
     Call<AuthResult> auth(@Query("social_user_id") String SocialUserId);
+
+
+    @GET("balance")
+    Call<BalanceResult> balance();
+
+    @POST ("itens/add")
+    Call<AddResult> add(@Query("name") String name, @Query("price") int price, @Query("type") String type);
+
+    @POST ("itens/remove")
+    Call<Result> remove(@Query("id") int id);
+
 }

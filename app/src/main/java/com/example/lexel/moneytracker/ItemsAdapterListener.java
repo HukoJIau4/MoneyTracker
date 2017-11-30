@@ -1,6 +1,7 @@
 package com.example.lexel.moneytracker;
 
 
+import com.example.lexel.moneytracker.api.Item;
 
 public interface ItemsAdapterListener {
 

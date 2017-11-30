@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,12 +24,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.lexel.moneytracker.api.Api;
+import com.example.lexel.moneytracker.api.Item;
 
 import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.lexel.moneytracker.Item.TYPE_UNKNOWN;
+import static com.example.lexel.moneytracker.api.Item.TYPE_UNKNOWN;
 
 public class ItemsFragment extends Fragment {
 
@@ -45,6 +46,8 @@ public class ItemsFragment extends Fragment {
     private String type = TYPE_UNKNOWN;
 
     private Api api;
+
+    private SwipeRefreshLayout refresh;
 
 
     private DialogInterface.OnClickListener OnClickListener;
@@ -85,6 +88,14 @@ public class ItemsFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+
+        refresh = view.findViewById(R.id.refresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
 
         adapter.setListener(new ItemsAdapterListener() {
             @Override
@@ -146,6 +157,7 @@ public class ItemsFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
+                refresh.setRefreshing(false);
                 if (items == null) {
                     showError();
 
@@ -162,7 +174,7 @@ public class ItemsFragment extends Fragment {
         }).forceLoad();
     }
     private void showError(){
-        Toast.makeText(getContext(), "Произошла ошибка", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -172,7 +184,9 @@ public class ItemsFragment extends Fragment {
         if (requestCode == AddActivity.RC_ADD_ITEM && resultCode == RESULT_OK){
 
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
-            Toast.makeText(getContext(), item.name +" " + item.price, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), item.name +" " + item.price, Toast.LENGTH_LONG).show();
+
+
         }
     }
 
@@ -224,7 +238,7 @@ public class ItemsFragment extends Fragment {
 
         private void showDialog(){
 
-            DialogFragment dialog;
+            ConfirmationDialog dialog;
             dialog = new ConfirmationDialog();
             dialog.show(getFragmentManager(), "Confirmation");
 

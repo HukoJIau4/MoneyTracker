@@ -15,11 +15,17 @@
     <string name="ok">Да</string>
     <string name="slogan">Ваш незаменимый помощник в управлении бюджетом</string>
     <string name="login_btn_text">Войти</string>
+    <string name="price">%1$d \u20bd</string>
+    <string name="error">Ошибка</string>
+    <string name="balance_caption">Ваш баланс</string>
+    <string name="expence_caption">Расход</string>
+    <string name="income_caption">Доход</string>
 
     <string-array name="tab_titles">
         <item>@string/tab_expenses</item>
         <item>@string/tab_incomes</item>
         <item>@string/tab_balance</item>
+
 
 
     </string-array>

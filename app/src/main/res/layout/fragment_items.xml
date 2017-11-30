@@ -7,6 +7,11 @@
     tools:context="com.example.lexel.moneytracker.ItemsFragment"
     android:background="@drawable/bg_pattern">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
@@ -16,6 +21,8 @@
         android:paddingRight="5dp"
         android:paddingTop="15dp"
         tools:listitem="@layout/item" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
